@@ -61,6 +61,6 @@ jobs:
       lint_dockerfile: false
       deploy_environments: >-
         [
-          { "name": "dev", "base_url": "https://example.com", "smoke_test_url": "https://example.com" },
+          { "name": "dev", "base_url": "https://example.com", "smoke_test_url": "https://example.com" }
         ]
     secrets: inherit
