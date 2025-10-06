@@ -14,8 +14,8 @@ def api_base_url() -> str:
     base_url = os.environ.get("API_BASE_URL")
     if not base_url:
         pytest.skip(
-            "API_BASE_URL environment variable must be set for integration tests"
-        )  # noqa: E501
+            "API_BASE_URL environment variable must be set for integration tests",
+        )
     return base_url.rstrip("/")
 
 

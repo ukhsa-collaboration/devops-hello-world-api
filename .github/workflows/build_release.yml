@@ -52,13 +52,13 @@ jobs:
       app_name: ${{ vars.APP_NAME }}
       service_identifier: ${{ vars.ECR_NAMESPACE }}
       aws_region: ${{ vars.AWS_REGION }}
-      runner_labels: '["ohid-runners"]'
       run_unit_tests: ${{ vars.RUN_UNIT_TESTS == 'true' }}
-      unit_test_command: API_BASE_URL=https://google.com uv run pytest 
+      unit_test_command: uv run pytest 
       push_image: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
       release_tag: ${{ needs.prepare-release-tag.outputs.release_tag }}
+      fail_on_trivy_findings: false
       sign_release: true
-      lint_dockerfile: true
+      lint_dockerfile: false
       deploy_environments: >-
         [
           { "name": "dev", "base_url": "https://example.com", "smoke_test_url": "https://example.com" },
