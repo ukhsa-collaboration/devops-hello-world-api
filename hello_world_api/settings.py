@@ -7,13 +7,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # Allow ALB to send healthchecks
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(",")
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "localhost").split(",")
 ALLOWED_HOSTS.append(gethostbyname(gethostname()))
 
-CORS_ALLOWED_ORIGINS = os.environ.get("CORS_ALLOWED_ORIGINS").split(",")
+CORS_ALLOWED_ORIGINS = os.environ.get(
+    "CORS_ALLOWED_ORIGINS",
+    "http://localhost:3000",
+).split(",")
 
-SECRET_KEY = os.environ.getenv("DJANGO_SECRET_KEY")
-DEBUG = bool(os.getenv("DJANGO_DEV_SERVER"))
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "fake-django-key")
+DEBUG = bool(os.getenv("DJANGO_DEV_SERVER", "False"))
 
 INSTALLED_APPS = [
     "django.contrib.contenttypes",
