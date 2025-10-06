@@ -1,11 +1,19 @@
 import os
 from pathlib import Path
+from socket import gethostbyname
+from socket import gethostname
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = "fake-django-secret-key"  # noqa: S105
-DEBUG = bool(os.getenv("DJANGO_DEBUG", "False"))
-ALLOWED_HOSTS = [os.getenv("ALLOWED_HOST", "localhost")]
+
+# Allow ALB to send healthchecks
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(",")
+ALLOWED_HOSTS.append(gethostbyname(gethostname()))
+
+CORS_ALLOWED_ORIGINS = os.environ.get("CORS_ALLOWED_ORIGINS").split(",")
+
+SECRET_KEY = os.environ.getenv("DJANGO_SECRET_KEY")
+DEBUG = bool(os.getenv("DJANGO_DEV_SERVER"))
 
 INSTALLED_APPS = [
     "django.contrib.contenttypes",
@@ -17,9 +25,6 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    os.getenv("CORS_ALLOWED_ORIGIN", "http://localhost:3000"),
-]
 
 DATABASES = {
     "default": {
