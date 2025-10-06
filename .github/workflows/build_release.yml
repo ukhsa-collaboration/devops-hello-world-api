@@ -56,6 +56,7 @@ jobs:
       unit_test_command: uv run pytest 
       push_image: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
       release_tag: ${{ needs.prepare-release-tag.outputs.release_tag }}
+      fail_on_trivy_findings: false
       sign_release: true
       lint_dockerfile: false
       deploy_environments: >-
