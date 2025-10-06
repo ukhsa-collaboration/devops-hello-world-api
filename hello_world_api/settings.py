@@ -1,10 +1,11 @@
+import os
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = "fake-django-secret-key"  # noqa: S105
-DEBUG = True
-ALLOWED_HOSTS = []
+DEBUG = bool(os.getenv("DJANGO_DEBUG", "False"))
+ALLOWED_HOSTS = [os.getenv("ALLOWED_HOST", "localhost")]
 
 INSTALLED_APPS = [
     "django.contrib.contenttypes",
@@ -17,7 +18,7 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
+    os.getenv("CORS_ALLOWED_ORIGIN", "http://localhost:3000"),
 ]
 
 DATABASES = {
