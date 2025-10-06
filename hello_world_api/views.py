@@ -41,7 +41,7 @@ def messages(request):
         _MESSAGES[message_id] = message_text
 
         response = JsonResponse({"message": message_text}, status=201)
-        response["Location"] = f"/v1/message/{message_id}"
+        response["Location"] = f"/api/v1/message/{message_id}"
         return response
 
     return HttpResponseNotAllowed(["GET", "POST"])

@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from socket import gaierror
 from socket import gethostbyname
 from socket import gethostname
 
@@ -8,7 +9,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Allow ALB to send healthchecks
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "localhost").split(",")
-ALLOWED_HOSTS.append(gethostbyname(gethostname()))
+try:
+    host_ip = gethostbyname(gethostname())
+except gaierror:
+    host_ip = None
+
+if host_ip and host_ip not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append(host_ip)
 
 CORS_ALLOWED_ORIGINS = os.environ.get(
     "CORS_ALLOWED_ORIGINS",

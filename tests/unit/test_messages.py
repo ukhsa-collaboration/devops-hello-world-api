@@ -39,7 +39,7 @@ class HelloWorldTest(TestCase):
 
         assert response.status_code == HTTPStatus.CREATED
         assert response.json() == {"message": "Hi there"}
-        assert response["Location"].startswith("/v1/message/")
+        assert response["Location"].startswith("/api/v1/message/")
 
         detail_response = self.client.get(response["Location"])
         assert detail_response.status_code == HTTPStatus.OK

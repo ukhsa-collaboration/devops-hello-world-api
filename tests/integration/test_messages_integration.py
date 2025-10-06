@@ -20,7 +20,7 @@ def api_base_url() -> str:
 
 
 def test_list_messages_contains_default_message(api_base_url: str) -> None:
-    response = requests.get(f"{api_base_url}/v1/message", timeout=5)
+    response = requests.get(f"{api_base_url}/api/v1/message", timeout=5)
     assert response.status_code == 200  # noqa: PLR2004
     payload = response.json()
     assert isinstance(payload, list)
@@ -30,7 +30,7 @@ def test_list_messages_contains_default_message(api_base_url: str) -> None:
 def test_create_message_and_fetch_detail(api_base_url: str) -> None:
     create_payload = {"message": "Integration test message"}
     create_response = requests.post(
-        f"{api_base_url}/v1/message",
+        f"{api_base_url}/api/v1/message",
         json=create_payload,
         timeout=5,
     )

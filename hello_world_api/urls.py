@@ -15,12 +15,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
+from django.urls import include
 from django.urls import path
 
 from .views import message_detail
 from .views import messages
 
-urlpatterns = [
+api_urlpatterns = [
     path("v1/message", messages, name="message-list"),
     path("v1/message/<int:message_id>", message_detail, name="message-detail"),
 ]
+
+urlpatterns = [path("api/", include(api_urlpatterns))]
